@@ -1,0 +1,14 @@
+{
+  "name": "twirltape",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Twirl Tape website built with Eleventy",
+  "scripts": {
+    "dev": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy",
+    "watch": "npx @11ty/eleventy --watch"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

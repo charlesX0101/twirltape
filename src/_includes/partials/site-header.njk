@@ -1,0 +1,72 @@
+<header class="site-header" data-header>
+  <div class="shell site-header__inner">
+    <a class="site-brand" href="/" aria-label="Twirl Tape home">
+      <img
+        class="site-brand__logo"
+        src="/assets/img/logo.png"
+        alt="Twirl Tape"
+        width="144"
+        height="36"
+      >
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        {% for item in site.nav %}
+          {% set isActive = page.url == item.url %}
+          <li class="site-nav__item">
+            <a
+              class="site-nav__link{% if isActive %} is-active{% endif %}"
+              href="{{ item.url }}"
+              {% if isActive %}aria-current="page"{% endif %}
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="site-header__cta-link" href="/academy/">Explore the Academy</a>
+      <a class="site-header__cta-button" href="/creator-club/">View Creator Club</a>
+    </div>
+
+    <button
+      class="site-nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      data-nav-toggle
+    >
+      <span class="site-nav-toggle__line"></span>
+      <span class="site-nav-toggle__line"></span>
+      <span class="site-nav-toggle__line"></span>
+      <span class="sr-only">Open navigation</span>
+    </button>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" hidden data-mobile-nav>
+    <div class="shell">
+      <nav aria-label="Mobile">
+        <ul class="mobile-nav__list">
+          {% for item in site.nav %}
+            {% set isActive = page.url == item.url %}
+            <li>
+              <a
+                class="mobile-nav__link{% if isActive %} is-active{% endif %}"
+                href="{{ item.url }}"
+                {% if isActive %}aria-current="page"{% endif %}
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          {% endfor %}
+          <li>
+            <a class="mobile-nav__link" href="/creator-club/">View Creator Club</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
