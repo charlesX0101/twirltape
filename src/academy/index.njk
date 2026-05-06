@@ -6,6 +6,44 @@ wallpaper: blueprint-academy.png
 permalink: /academy/
 ---
 
+{% set categories = [
+  {
+    title: "Getting Started",
+    section: "GETTING STARTED",
+    id: "getting-started"
+  },
+  {
+    title: "Planning",
+    section: "PLANNING",
+    id: "planning"
+  },
+  {
+    title: "Recording",
+    section: "RECORDING",
+    id: "recording"
+  },
+  {
+    title: "Editing and Sound",
+    section: "EDITING AND SOUND",
+    id: "editing-and-sound"
+  },
+  {
+    title: "Release",
+    section: "RELEASE",
+    id: "release"
+  },
+  {
+    title: "Podcast",
+    section: "PODCAST",
+    id: "podcast"
+  },
+  {
+    title: "Music",
+    section: "MUSIC",
+    id: "music"
+  }
+] %}
+
 <section class="page-hero page-hero--inner">
   <div class="shell">
     <div class="page-intro">
@@ -19,17 +57,52 @@ permalink: /academy/
   </div>
 </section>
 
-<section class="page-section">
+<section class="page-section academy-index">
   <div class="shell">
-    <div class="section-block">
-      <h2>Categories</h2>
-      <div class="card-grid card-grid--three">
-        <article class="card"><h3>Podcast Production</h3></article>
-        <article class="card"><h3>Video Production</h3></article>
-        <article class="card"><h3>Audio Production</h3></article>
-        <article class="card"><h3>Writing and Storytelling</h3></article>
-        <article class="card"><h3>Mixing and Mastering</h3></article>
-        <article class="card"><h3>Creator Studio Setup</h3></article>
+    <div class="academy-index__layout">
+      <aside class="academy-index__rail" aria-label="Academy categories">
+        <p class="eyebrow">Categories</p>
+
+        <nav class="academy-category-list">
+          {% for category in categories %}
+            <a class="academy-category-link" href="#{{ category.id }}">
+              {{ category.title }}
+            </a>
+          {% endfor %}
+        </nav>
+      </aside>
+
+      <div class="academy-index__main">
+        <div class="academy-index__header">
+          <h2>Browse Guides</h2>
+          <p class="lede">
+            Start with a category, then open the guide that matches the part of the project you are working on.
+          </p>
+        </div>
+
+        <div class="academy-archive__list">
+          {% for category in categories %}
+            <section class="academy-archive__group" id="{{ category.id }}">
+              <p class="eyebrow">{{ category.section }}</p>
+              <h3>{{ category.title }}</h3>
+
+              <ul class="academy-archive__links">
+                {% for item in collections.academy | sort(attribute="data.order") %}
+                  {% if item.data.section == category.section %}
+                    <li>
+                      <a href="{{ item.url }}">
+                        <span>{{ item.data.title }}</span>
+                        {% if item.data.description %}
+                          <small>{{ item.data.description }}</small>
+                        {% endif %}
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>

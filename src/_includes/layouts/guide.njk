@@ -1,0 +1,121 @@
+---
+layout: layouts/base.njk
+wallpaper: blueprint-academy.png
+---
+
+{% set categories = [
+  {
+    title: "Getting Started",
+    section: "GETTING STARTED",
+    id: "getting-started"
+  },
+  {
+    title: "Planning",
+    section: "PLANNING",
+    id: "planning"
+  },
+  {
+    title: "Recording",
+    section: "RECORDING",
+    id: "recording"
+  },
+  {
+    title: "Editing and Sound",
+    section: "EDITING AND SOUND",
+    id: "editing-and-sound"
+  },
+  {
+    title: "Release",
+    section: "RELEASE",
+    id: "release"
+  },
+  {
+    title: "Podcast",
+    section: "PODCAST",
+    id: "podcast"
+  },
+  {
+    title: "Music",
+    section: "MUSIC",
+    id: "music"
+  }
+] %}
+
+
+{% set academyGuides = collections.academy | sort(attribute="data.order") %}
+
+<section class="page-hero page-hero--inner academy-guide-hero">
+  <div class="shell">
+    <div class="page-intro">
+      <p class="eyebrow">Academy Guide</p>
+      <h1>{{ title }}</h1>
+      {% if description %}
+        <p class="lede">{{ description }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="page-section academy-guide">
+  <div class="shell">
+    <div class="academy-guide__layout">
+      <article class="academy-guide__article">
+        {{ content | safe }}
+      </article>
+
+      <aside class="academy-guide__sidebar" aria-label="Academy guide navigation">
+        <div class="academy-guide__search">
+          <label class="sr-only" for="academy-guide-search">Search Academy</label>
+          <input
+            id="academy-guide-search"
+            type="search"
+            placeholder="Search Academy..."
+            data-guide-search-input
+          >
+        </div>
+
+        <nav class="academy-guide__nav" data-guide-search-list>
+          {% for category in categories %}
+            <section class="academy-guide__nav-group">
+              <p class="academy-guide__nav-label">{{ category.section }}</p>
+
+              <ul>
+                {% for item in academyGuides %}
+                  {% if item.data.section == category.section %}
+                    <li data-guide-search-item>
+                      {% if item.url == page.url %}
+                        <span class="is-active">{{ item.data.title }}</span>
+                      {% else %}
+                        <a href="{{ item.url }}">{{ item.data.title }}</a>
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
+        </nav>
+
+        {% set currentIndex = -1 %}
+        {% for item in academyGuides %}
+          {% if item.url == page.url %}
+            {% set currentIndex = loop.index0 %}
+          {% endif %}
+        {% endfor %}
+
+        {% if currentIndex > -1 and academyGuides[currentIndex + 1] %}
+          <div class="academy-guide__next">
+            <p class="eyebrow">Next Guide</p>
+            <a href="{{ academyGuides[currentIndex + 1].url }}">
+              {{ academyGuides[currentIndex + 1].data.title }}
+            </a>
+          </div>
+        {% endif %}
+
+        <button class="academy-guide__share" type="button" data-share-page>
+          Share This Page
+        </button>
+      </aside>
+    </div>
+  </div>
+</section>
